@@ -176,8 +176,8 @@ class BaseController:
 #            self.enc_right = right_enc
 #            self.enc_left = left_enc
 
-            df_vx = (2 * dwheel2 - dwheel1 - dwheel3) / 3
-	    df_vy = (dwheel3 - dwheel1) * 0.57735
+            df_vy = -(2 * dwheel2 - dwheel1 - dwheel3) / 3
+	    df_vx = (dwheel3 - dwheel1) * 0.57735
 	    df_vth = (dwheel1 + dwheel2 + dwheel3) / (3 * self.wheel_track)
 
 	    delta_x = (df_vx * cos(self.th) - df_vy * sin(self.th)) * dt
@@ -307,14 +307,14 @@ class BaseController:
             wheel3 = wheel1
         elif th == 0:
             # Pure forward/backward motion
-            wheel1 = -0.5 * x - 0.86603 * y
-            wheel2 = x
-            wheel3 = -0.5 * x + 0.86603 * y
+            wheel1 = 0.5 * y - 0.86603 * x
+            wheel2 = -y
+            wheel3 = 0.5 * y + 0.86603 * x
         else:
             # Rotation about a point in space
-            wheel1 = -0.5 * x - 0.86603 * y + th * self.wheel_track  * self.gear_reduction
-            wheel2 = x + th * self.wheel_track  * self.gear_reduction
-            wheel3 = -0.5 * x + 0.86603 * y + th * self.wheel_track  * self.gear_reduction
+            wheel1 = 0.5 * y - 0.86603 * x + th * self.wheel_track  * self.gear_reduction
+            wheel2 = -y + th * self.wheel_track  * self.gear_reduction
+            wheel3 = 0.5 * y + 0.86603 * x + th * self.wheel_track  * self.gear_reduction
 
         self.v_des_wheel1 = int(wheel1 * self.ticks_per_meter / self.arduino.PID_RATE)
         self.v_des_wheel2 = int(wheel2 * self.ticks_per_meter / self.arduino.PID_RATE)
