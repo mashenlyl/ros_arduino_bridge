@@ -282,7 +282,7 @@ class BaseController:
 
             # Set motor speeds in encoder ticks per PID loop
             if not self.stopped:
-		self.arduino.drive(self.v_wheel1, self.v_wheel2, self.v_wheel3)
+		self.arduino.drive(-self.v_wheel1, -self.v_wheel2, -self.v_wheel3)
 #                self.arduino.drive(self.v_left, self.v_right)
 
             self.t_next = now + self.t_delta
